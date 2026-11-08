@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Mi rutina de 12 semanas</title>
+<style>
+:root{color-scheme:light;--bg:#f6f5fb;--card:#fff;--tx:#1e1b2e;--mu:#6b6880;--ac:#5b4bdb;--ok:#1f9d6b;--bd:#e3e0f0;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){color-scheme:dark;--bg:#14121f;--card:#1f1c30;--tx:#f0eefb;--mu:#a29fbb;--ac:#8f82ff;--ok:#42c996;--bd:#322e4a}}
+:root[data-theme="dark"]{color-scheme:dark;--bg:#14121f;--card:#1f1c30;--tx:#f0eefb;--mu:#a29fbb;--ac:#8f82ff;--ok:#42c996;--bd:#322e4a}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--tx);font:16px/1.4 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+main{max-width:520px;margin:0 auto;padding:16px}
+h1{font-size:20px;margin:4px 0 2px}
+.sub{color:var(--mu);font-size:14px;margin-bottom:14px}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:16px;padding:14px;margin-bottom:12px}
+.stats{display:flex;gap:8px}
+.stat{flex:1;text-align:center}
+.stat b{display:block;font-size:26px}
+.stat span{font-size:12px;color:var(--mu)}
+.week{display:grid;grid-template-columns:repeat(7,1fr);gap:6px}
+.d{border:1px solid var(--bd);background:var(--card);color:var(--tx);border-radius:12px;padding:8px 0;font:inherit;font-size:12px;text-align:center}
+.d i{display:block;font-style:normal;font-size:16px;margin-top:2px}
+.d.sel{border-color:var(--ac);box-shadow:0 0 0 2px var(--ac)}
+.d.today{font-weight:700}
+h2{font-size:18px;margin:0 0 4px}
+.note{color:var(--mu);font-size:13px;margin:0 0 10px}
+.ex{display:flex;gap:12px;align-items:center;padding:12px 4px;border-top:1px solid var(--bd);width:100%;background:none;border-left:0;border-right:0;border-bottom:0;color:var(--tx);font:inherit;text-align:left}
+.box{flex:none;width:28px;height:28px;border-radius:8px;border:2px solid var(--ac);display:grid;place-items:center;color:#fff;font-weight:700}
+.ex.on .box{background:var(--ok);border-color:var(--ok)}
+.ex.on .nm{text-decoration:line-through;color:var(--mu)}
+.nm{font-weight:600}
+.dt{display:block;font-size:13px;color:var(--mu);font-weight:400}
+.bar{height:8px;background:var(--bd);border-radius:6px;overflow:hidden;margin:8px 0}
+.bar div{height:100%;background:var(--ok);width:0;transition:width .2s}
+.rest{text-align:center;padding:12px 0}
+.rest .big{font-size:42px}
+.btn{background:var(--ac);color:#fff;border:0;border-radius:12px;padding:10px 14px;font:inherit;font-weight:600}
+.dis{opacity:.5;pointer-events:none}
+label{font-size:13px;color:var(--mu)}
+input[type=date]{font:inherit;margin-left:6px;background:var(--card);color:var(--tx);border:1px solid var(--bd);border-radius:8px;padding:4px}
+.ct{display:flex;align-items:center;gap:8px;padding:0 0 12px 40px;font-size:13px;color:var(--mu);flex-wrap:wrap}.ct button{width:34px;height:34px;border-radius:10px;border:1px solid var(--bd);background:var(--card);color:var(--tx);font:inherit;font-size:18px}.ct b{min-width:28px;text-align:center;color:var(--tx);font-size:18px}
+.mg{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:10px 0}.mg label{display:block}.mg input{width:100%;font:inherit;margin-top:2px;background:var(--card);color:var(--tx);border:1px solid var(--bd);border-radius:8px;padding:8px}
+.mrow{border-top:1px solid var(--bd);padding:8px 0;font-size:14px}.mrow b{display:block}
+.phg{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px}.ph{margin:0}.ph img{width:100%;border-radius:12px;display:block}.ph figcaption{font-size:12px;color:var(--mu);margin:4px 0}.ph button{font:inherit;font-size:12px;background:none;border:1px solid var(--bd);color:var(--mu);border-radius:8px;padding:4px 8px}
+.row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}.row select{font:inherit;background:var(--card);color:var(--tx);border:1px solid var(--bd);border-radius:10px;padding:10px}
+.up{position:relative;overflow:hidden;display:inline-block}.up input{position:absolute;inset:0;opacity:0;width:100%;height:100%}
+
+.stat b{font-size:22px}.stat span{font-size:11px}.red{color:#d9534f}
+</style>
+</head>
+<body>
+<main>
+<h1 id="h1"></h1>
+<div class="sub" id="sub"></div>
+<div class="card stats">
+  <div class="stat"><b id="streak">0</b><span>🔥 racha</span></div>
+  <div class="stat"><b id="best">0</b><span>🏆 mejor</span></div>
+  <div class="stat"><b id="tot">0</b><span>✅ entrenos</span></div>
+  <div class="stat"><b id="rst">0</b><span>😴 descansos</span></div>
+</div>
+<div class="card"><div class="week" id="week"></div>
+<p class="note" style="margin:8px 0 0">✅ hecho · 😴 descanso marcado · ➖ descanso sin marcar · ❌ no hiciste tus ejercicios</p></div>
+<div class="card" id="day"></div>
+<div class="card">
+  <h2>📏 Mis medidas</h2>
+  <p class="note" id="mednote"></p>
+  <div id="medform"><div class="mg" id="mg"></div><button class="btn" id="m_save">Guardar medidas</button></div>
+  <div id="medlist" style="margin-top:10px"></div>
+</div>
+<div class="card" id="phc" style="display:none">
+  <h2>📸 Fotos de progreso</h2>
+  <p class="note">¡Desbloqueaste las fotos por tu constancia! Tómalas con la misma luz, distancia y postura. Se guardan en este teléfono.</p>
+  <div class="row">
+    <select id="ph_lab"><option>Frente</option><option>Lado</option><option>Espalda</option></select>
+    <span class="btn up">Añadir foto<input type="file" accept="image/*" id="ph_in"></span>
+  </div>
+  <p class="note" id="phmsg"></p>
+  <div class="phg" id="phlist"></div>
+</div>
+<div class="card">
+  <h2>📤 Compartir mi resumen</h2>
+  <p class="note">Crea un texto con tu racha, tu semana y tus últimas medidas para mandarlo por WhatsApp.</p>
+  <button class="btn" id="sh">Compartir resumen</button>
+  <textarea id="shtxt" readonly style="display:none;width:100%;min-height:170px;margin-top:10px;font:inherit;font-size:14px;background:var(--card);color:var(--tx);border:1px solid var(--bd);border-radius:10px;padding:10px"></textarea>
+  <p class="note" id="shmsg"></p>
+</div>
+<div class="card">
+  <h2>💾 Respaldo</h2>
+  <p class="note">Descarga una copia de todos tus datos por si cambias de teléfono o borras el navegador. Al restaurar un respaldo, se reemplaza lo que tengas ahora en esta página.</p>
+  <button class="btn" id="dl">Descargar mis datos</button>
+  <span class="btn up" style="margin-left:8px">Restaurar respaldo<input type="file" accept=".json,application/json" id="rs_in"></span>
+  <p class="note" id="dlmsg"></p>
+</div>
+<div class="card"><label>Fecha de inicio del programa <input type="date" id="start"></label></div>
+</main>
+<script>
+var C={
+ key:"rutina_v1",file:"mi-rutina-respaldo",title:"Mi rutina de 12 semanas 💪",photoAt:7,reps:true,
+ meas:[["Peso","peso","lb"],["Hombros","hom","cm"],["Pecho","pec","cm"],["Cintura","cin","cm"]],
+ medNote:"Mídete una vez al mes, con la misma postura y a la misma hora. Hombros: alrededor de la parte más ancha. Pecho: a la altura del pecho. Cintura: a la altura del ombligo.",
+ phase:function(w){return w<=2?"Semanas 1–2: 2 series por ejercicio, enfócate en la técnica":w<=4?"Semanas 3–4: 3 series en los ejercicios principales":w<=6?"Semanas 5–6: más repeticiones y bajada lenta":w<=8?"Semanas 7–8: añade resistencia con mochila si puedes":w<=10?"Semanas 9–10: mejora la calidad y la resistencia":"Semanas 11–12: consolida y compara tus resultados"},
+ plan:function(dw){
+  var W=["Calentamiento","5–7 min: círculos de hombros, remo sin peso, flexiones en pared"];
+  var P=[
+   {t:"Espalda y bíceps",ex:[W,["Remo unilateral apoyado en mesa","3 × 12–15 por brazo"],["Pájaros unilaterales","2 × 12–15 por brazo"],["Curl de bíceps","3 × 10–15 por brazo"],["Curl martillo","2 × 12 por brazo"]]},
+   {t:"Hombros y pecho moderado",ex:[W,["Elevaciones laterales","3 × 12–20 (botella de agua si pesa mucho)"],["Press militar unilateral","3 × 10–12 por brazo"],["Flexiones inclinadas en mesa","2 × 8–12 (revisa que la mesa no se mueva)"],["Extensión de tríceps","2 × 12–15"]]},
+   null,
+   {t:"Piernas y abdomen",ex:[["Calentamiento","5–7 min: marcha en el sitio y movilidad"],["Sentadillas","3 × 15"],["Zancadas hacia atrás","2 × 10 por pierna"],["Puente de glúteos","3 × 15"],["Plancha","3 × 20–40 segundos"]]},
+   null,
+   {t:"Espalda, hombros y brazos",ex:[W,["Remo unilateral","3 × 15 por brazo"],["Elevaciones laterales","3 × 15–20"],["Pájaros","2 × 15"],["Curl martillo","2 × 12 por brazo"],["Grip de mano","2 × 12–15 por mano"]]},
+   null];
+  return P[dw];
+ }
+};
+var DN=["Lun","Mar","Mié","Jue","Vie","Sáb","Dom"];
+var S={};
+var $=function(i){return document.getElementById(i)};
+function load(){
+  try{var r=localStorage.getItem(C.key);if(r)S=JSON.parse(r)}catch(e){}
+  if(!S||typeof S!=="object")S={};
+  ["done","reps","med","rest"].forEach(function(k){if(!S[k]||typeof S[k]!=="object")S[k]={}});
+  if(!Array.isArray(S.photos))S.photos=[];
+}
+function save(){try{localStorage.setItem(C.key,JSON.stringify(S));return true}catch(e){return false}}
+function key(d){return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0")}
+function parse(k){var p=k.split("-");return new Date(+p[0],+p[1]-1,+p[2])}
+function addD(d,n){var x=new Date(d);x.setDate(x.getDate()+n);return x}
+function dow(d){return (d.getDay()+6)%7}
+function fmt(k){return k.split("-").reverse().join("/")}
+var today=new Date();today.setHours(0,0,0,0);
+load();
+if(!S.start){S.start=key(today);save()}
+var sel=key(today),armed=-1;
+function dayN(d){return Math.round((d-parse(S.start))/864e5)}
+function info(d){
+  var n=dayN(d);if(n<0)return{k:"pre"};
+  var p=C.plan(dow(d),Math.floor(n/7)+1);
+  return p?{k:"tr",p:p}:{k:"rest"};
+}
+function cnt(k){var o=S.done[k]||{},n=0;for(var i in o)if(o[i])n++;return n}
+function st(d){
+  var i=info(d),k=key(d);
+  if(i.k==="pre")return"pre";
+  var ok=i.k==="rest"?!!S.rest[k]:cnt(k)>=i.p.ex.length;
+  if(ok)return"ok";
+  if(k===key(today))return"open";
+  return i.k==="rest"?"skip":"no";
+}
+function stats(){
+  var cur=0,best=0,run=0,tot=0,rs=0,d,s,s0=parse(S.start);
+  for(d=new Date(s0);d<=today;d=addD(d,1)){
+    s=st(d);
+    if(s==="ok"){run++;if(run>best)best=run;if(info(d).k==="rest")rs++;else tot++}
+    else if(s==="no")run=0;
+  }
+  for(d=new Date(today);d>=s0;d=addD(d,-1)){
+    s=st(d);
+    if(s==="ok")cur++;else if(s==="no")break;
+  }
+  return{cur:cur,best:best,tot:tot,rs:rs};
+}
+function icon(d){
+  var s=st(d),i=info(d);
+  if(s==="pre")return"·";
+  if(d>today)return i.k==="rest"?"🌙":(i.p.walk?"🚶":"🏋️");
+  if(s==="ok")return i.k==="rest"?"😴":"✅";
+  if(s==="open")return"⏳";
+  return s==="skip"?"➖":"❌";
+}
+function lastReps(name){
+  var ks=Object.keys(S.reps).sort().reverse();
+  for(var j=0;j<ks.length;j++){if(ks[j]<sel&&S.reps[ks[j]][name])return S.reps[ks[j]][name]}
+  return 0;
+}
+function render(){
+  var s=stats(),n=dayN(today),w=Math.floor(n/7)+1;
+  $("h1").textContent=C.title;
+  $("sub").textContent=n<0?"Tu programa empieza el "+fmt(S.start):w>12?"¡Terminaste las 12 semanas! 🎉":"Semana "+w+" de 12 · "+C.phase(w);
+  $("streak").textContent=s.cur;$("best").textContent=s.best;$("tot").textContent=s.tot;$("rst").textContent=s.rs;
+  $("start").value=S.start;
+  $("phc").style.display=s.best>=C.photoAt?"block":"none";
+  var selD=parse(sel),mon=addD(selD,-dow(selD)),wk="";
+  for(var i=0;i<7;i++){
+    var d=addD(mon,i),k=key(d);
+    wk+='<button class="d'+(k===sel?" sel":"")+(k===key(today)?" today":"")+'" data-k="'+k+'">'+DN[i]+"<i>"+icon(d)+"</i></button>";
+  }
+  $("week").innerHTML=wk;
+  [].forEach.call($("week").querySelectorAll(".d"),function(b){b.onclick=function(){sel=b.dataset.k;render()}});
+  renderDay();renderMed();renderPhotos();
+}
+function renderDay(){
+  var d=parse(sel),i=info(d),fut=d>today,nice=DN[dow(d)]+" "+d.getDate()+"/"+(d.getMonth()+1),h="";
+  if(i.k==="pre"){
+    h="<h2>Aún no empieza</h2><p class=\"note\">Tu programa empieza el "+fmt(S.start)+".</p>";
+  }else if(i.k==="rest"){
+    var on=S.rest[sel];
+    h='<div class="rest"><div class="big">😴</div><h2>Día de descanso</h2><p class="note">'+nice+" · Márcalo para que cuente en tu racha.</p>"
+     +'<button class="btn'+(fut?" dis":"")+'" id="rb">'+(on?"Descanso marcado ✓ (toca para quitar)":"Marcar día de descanso")+"</button></div>";
+  }else{
+    var p=i.p,c=cnt(sel),n=p.ex.length,past=!fut&&sel!==key(today);
+    h="<h2>"+p.t+'</h2><p class="note">'+nice+(p.n?" · "+p.n:"")+(fut?" · aún no puedes marcar este día":"")+"</p>";
+    if(past&&c<n)h+='<p class="note red">❌ No hiciste tus ejercicios este día.</p>';
+    h+='<div class="bar"><div style="width:'+Math.round(c/n*100)+'%"></div></div><p class="note">'+c+" de "+n+" hechos"+(c===n?" · ¡día completo! 🎉":"")+"</p>";
+    h+="<div"+(fut?' class="dis"':"")+">";
+    p.ex.forEach(function(e,j){
+      var on=(S.done[sel]||{})[j];
+      h+='<div class="exw"><button class="ex'+(on?" on":"")+'" data-i="'+j+'"><span class="box">'+(on?"✓":"")+'</span><span class="nm">'+e[0]+'<span class="dt">'+e[1]+"</span></span></button>";
+      if(C.reps&&j>0){
+        var u=e[0].indexOf("Plancha")===0?"seg":"reps",r=(S.reps[sel]||{})[e[0]]||0,lw=lastReps(e[0]);
+        h+='<div class="ct"><button data-n="'+e[0]+'" data-s="-1">−</button><b>'+r+'</b><button data-n="'+e[0]+'" data-s="1">+</button><span>'+u+" en tu mejor serie"+(lw?" · última vez: "+lw:"")+"</span></div>";
+      }
+      h+="</div>";
+    });
+    h+="</div>";
+  }
+  var el=$("day");el.innerHTML=h;
+  var rb=$("rb");if(rb)rb.onclick=function(){S.rest[sel]=!S.rest[sel];save();render()};
+  [].forEach.call(el.querySelectorAll(".ex"),function(b){b.onclick=function(){
+    var o=S.done[sel]||(S.done[sel]={}),j=b.dataset.i;o[j]=!o[j];save();render();
+  }});
+  [].forEach.call(el.querySelectorAll(".ct button"),function(b){b.onclick=function(){
+    var o=S.reps[sel]||(S.reps[sel]={}),nm=b.dataset.n;o[nm]=Math.max(0,(o[nm]||0)+(+b.dataset.s));save();render();
+  }});
+}
+function renderMed(){
+  var ks=Object.keys(S.med).sort(),last=ks[ks.length-1];
+  var due=!last||last===key(today)||Math.round((today-parse(last))/864e5)>=30;
+  $("medform").style.display=due?"block":"none";
+  $("mednote").textContent=due?C.medNote:"Las medidas se toman una vez al mes. Tu próxima medición es el "+fmt(key(addD(parse(last),30)))+".";
+  var el=$("medlist");
+  if(!ks.length){el.innerHTML='<p class="note">Aún no hay medidas guardadas.</p>';return}
+  var f=S.med[ks[0]],h="";
+  function t(l,v,v0,u){if(v==null)return"";var d="";if(v0!=null&&v!==v0)d=" ("+(v>v0?"+":"")+Math.round((v-v0)*10)/10+")";return l+" "+v+" "+u+d}
+  ks.slice().reverse().forEach(function(k){
+    var m=S.med[k];
+    h+='<div class="mrow"><b>'+fmt(k)+"</b>"+C.meas.map(function(x){return t(x[0],m[x[1]],f[x[1]],x[2])}).filter(Boolean).join(" · ")+"</div>";
+  });
+  el.innerHTML=h+'<p class="note">Los números entre paréntesis comparan con tu primera medida.</p>';
+}
+function renderPhotos(){
+  var el=$("phlist"),h="";
+  if(!S.photos.length){el.innerHTML='<p class="note">Aún no hay fotos.</p>';return}
+  for(var i=S.photos.length-1;i>=0;i--){
+    var p=S.photos[i];
+    h+='<figure class="ph"><img src="'+p.src+'" alt="Foto de progreso"><figcaption>'+fmt(p.d)+" · "+p.l+'</figcaption><button data-i="'+i+'">'+(armed===i?"¿Borrar? Toca otra vez":"Borrar")+"</button></figure>";
+  }
+  el.innerHTML=h;
+  [].forEach.call(el.querySelectorAll("button"),function(b){b.onclick=function(){
+    var i=+b.dataset.i;
+    if(armed===i){S.photos.splice(i,1);armed=-1;save()}else armed=i;
+    renderPhotos();
+  }});
+}
+function summary(){
+  var s=stats(),n=dayN(today),w=Math.floor(n/7)+1,mon=addD(today,-dow(today)),days="";
+  for(var i=0;i<7;i++)days+=DN[i]+" "+icon(addD(mon,i))+"  ";
+  var t="📋 Mi progreso"+(n>=0&&w<=12?" · Semana "+w+" de 12":"")+"\n🔥 Racha: "+s.cur+" días (mejor: "+s.best+")\n✅ Entrenos completos: "+s.tot+" · 😴 Descansos marcados: "+s.rs+"\n📅 Esta semana: "+days.trim();
+  var ks=Object.keys(S.med).sort();
+  if(ks.length){
+    var m=S.med[ks[ks.length-1]],f=S.med[ks[0]],parts=[];
+    C.meas.forEach(function(x){
+      var v=m[x[1]];if(v==null)return;
+      var d0=f[x[1]],c="";
+      if(ks.length>1&&d0!=null&&v!==d0)c=" ("+(v>d0?"+":"")+Math.round((v-d0)*10)/10+")";
+      parts.push(x[0]+" "+v+" "+x[2]+c);
+    });
+    t+="\n📏 Medidas ("+fmt(ks[ks.length-1])+"): "+parts.join(", ");
+  }
+  if(s.best>=C.photoAt)t+="\n📸 Fotos guardadas: "+S.photos.length;
+  return t;
+}
+(function(){
+  $("mg").innerHTML=C.meas.map(function(x){return"<label>"+x[0]+" ("+x[2]+')<input type="number" inputmode="decimal" id="m_'+x[1]+'"></label>'}).join("");
+  var t=S.med[key(today)];
+  if(t)C.meas.forEach(function(x){if(t[x[1]]!=null)$("m_"+x[1]).value=t[x[1]]});
+  $("m_save").onclick=function(){
+    var m={},any=false;
+    C.meas.forEach(function(x){var v=parseFloat($("m_"+x[1]).value);if(!isNaN(v)){m[x[1]]=v;any=true}});
+    if(!any)return;
+    S.med[key(today)]=m;save();renderMed();
+    this.textContent="¡Guardado! ✓";var b=this;setTimeout(function(){b.textContent="Guardar medidas"},1500);
+  };
+  $("start").onchange=function(e){if(e.target.value){S.start=e.target.value;save();render()}};
+  $("ph_in").onchange=function(e){
+    var f=e.target.files[0],pm=$("phmsg");if(!f)return;
+    pm.textContent="";
+    var img=new Image(),u=URL.createObjectURL(f);
+    img.onload=function(){
+      var s=Math.min(1,720/Math.max(img.width,img.height)),c=document.createElement("canvas");
+      c.width=Math.round(img.width*s);c.height=Math.round(img.height*s);
+      c.getContext("2d").drawImage(img,0,0,c.width,c.height);
+      URL.revokeObjectURL(u);
+      S.photos.push({d:key(today),l:$("ph_lab").value,src:c.toDataURL("image/jpeg",0.7)});
+      if(!save()){S.photos.pop();pm.textContent="No hay espacio para más fotos. Descarga tu respaldo y borra alguna foto antigua."}
+      renderPhotos();e.target.value="";
+    };
+    img.onerror=function(){pm.textContent="No pude leer esa foto, intenta con otra."};
+    img.src=u;
+  };
+  $("sh").onclick=async function(){
+    var t=summary(),ta=$("shtxt"),m=$("shmsg");
+    ta.style.display="block";ta.value=t;m.textContent="";
+    try{if(navigator.share){await navigator.share({text:t});return}}catch(e){if(e&&e.name==="AbortError")return}
+    try{await navigator.clipboard.writeText(t);m.textContent="Copiado ✓ Ya puedes pegarlo en WhatsApp."}
+    catch(e){ta.focus();ta.select();m.textContent="Mantén presionado el texto, elige Copiar y pégalo en WhatsApp."}
+  };
+  $("dl").onclick=async function(){
+    var dm=$("dlmsg");dm.textContent="";
+    try{
+      var blob=new Blob([JSON.stringify(S)],{type:"application/json"}),fn=C.file+"-"+key(today)+".json";
+      var d=(window.claude&&window.claude.use)?await window.claude.use("downloads"):null;
+      if(d){await d.save({filename:fn,data:blob})}
+      else{var a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download=fn;document.body.appendChild(a);a.click();a.remove()}
+    }catch(err){if(!err||err.code!=="declined")dm.textContent="No se pudo descargar. Intenta de nuevo."}
+  };
+  $("rs_in").onchange=function(e){
+    var f=e.target.files[0],dm=$("dlmsg");if(!f)return;
+    var r=new FileReader();
+    r.onload=function(){
+      try{
+        var d=JSON.parse(r.result);
+        if(!d||typeof d!=="object"||!d.done||!d.start)throw new Error("x");
+        S=d;load2();
+        if(save()){dm.textContent="Respaldo restaurado ✓"}
+        else{S.photos=[];save();dm.textContent="Restauré todo menos las fotos, porque no cabían."}
+        render();
+      }catch(err){dm.textContent="Ese archivo no parece un respaldo de esta página."}
+      e.target.value="";
+    };
+    r.onerror=function(){dm.textContent="No pude leer ese archivo."};
+    r.readAsText(f);
+  };
+})();
+function load2(){
+  ["done","reps","med","rest"].forEach(function(k){if(!S[k]||typeof S[k]!=="object")S[k]={}});
+  if(!Array.isArray(S.photos))S.photos=[];
+}
+render();
+</script>
+</body>
+</html>
